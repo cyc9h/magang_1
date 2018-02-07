@@ -1,3 +1,18 @@
+<?php
+
+    session_start();
+    if(isset($_SESSION['username'])) {
+          if ($_SESSION['username']=='user') {
+                header("Location:../pencari/index.php");
+          } else if($_SESSION['username']=='pemilik') {
+                //Do Nothing
+          }
+       }
+    else {
+      header("Location:../../index.php");
+    }
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +21,6 @@
   <!-- Make sure you put this AFTER Leaflet's CSS -->
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js" integrity="sha512-C7BBF9irt5R7hqbUm2uxtODlUVs+IsNu2UULGuZN7gM+k/mmeG4xvIEac01BtQa4YIkUpp23zZC4wIwuXaPMQA==" crossorigin=""></script>
 
-  </style>
   <script type="text/javascript" src="../../jquery/jquery.js"></script>
   <script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
   <script type="text/javascript" src="../../js/main.js"></script>
@@ -17,7 +31,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Lahan Lahan</title>
+  <title>AndaLand</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../../fw_bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -33,32 +47,65 @@
   <!-- Custom styles for this template -->
   <link href="../../fw_bootstrap/css/freelancer.min.css" rel="stylesheet">
 
+    <!--Tulisan-->
+    <link href='https://fonts.googleapis.com/css?family=Andada' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Andada';
+            font-size: 14px;
+        }
+    </style>
+
+    <!--Button-->
+    <style>
+        .button {
+            background-color: #b38f00;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 10px 14px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button1{
+            background-color: white;
+            color: black;
+            border: 2px solid #b38f00;
+        }
+        .button1:hover{
+            background-color: #b38f00;
+            color: white;
+        }
+    </style>
 </head>
 
-<body id="page-top">
+<body onload="checklat()" id="page-top" style="background-color:#ffffff;">
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="../index.php">Lahan</a>
-      <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="button button1" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
-        </button>
+      </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Portfolio</a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../../pg_chat/index.php">Inbox</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
           </li>
           <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../sy_proses/pr_logout.php">Log Out</a>
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../sy_proses/pr_logout.php">Logout</a>
           </li>
         </ul>
       </div>
-    </div>
   </nav>
 
   <!-- Header -->
@@ -66,27 +113,25 @@
     <div class="container">
       <h1 class="text-uppercase mb-0">Menu Maps Disini</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Temukan Lahan Potensial Sesuai Kebutuhan Anda</h2>
+      <h2 class="font-weight-light mb-0">Found Your Land</h2>
     </div>
   </header>
 
   <!-- Portfolio Grid Section -->
   <section class="portfolio" id="portfolio">
     <div class="container">
-      <h2 class="text-center text-uppercase text-secondary mb-0">GIS LAHAN</h2>
+      <h2 class="text-center text-uppercase text-secondary mb-0">GIS LAND</h2>
       <hr class="star-dark mb-5">
-
-
     </div>
   </section>
 
-  <footer class="footer text-center">
+  <footer class="footer text-center" style="background-color:#b38f00;">
     <div class="container">
       <div class="row">
         <div class="col-md-4 mb-5 mb-lg-0">
           <h4 class="text-uppercase mb-4">Location</h4>
-          <p class="lead mb-0">2215 John Daniel Drive
-            <br>Clark, MO 65243</p>
+          <p class="lead mb-0">Graha Irama lt. 6 suite A - B <br> Jl. H. R. Rasuna Said No.1-2, RT.6/RW.4
+              <br>Kuningan Timur, Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12950</p>
         </div>
         <div class="col-md-4 mb-5 mb-lg-0">
           <h4 class="text-uppercase mb-4">Around the Web</h4>
@@ -94,7 +139,7 @@
             <li class="list-inline-item">
               <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
                   <i class="fa fa-fw fa-facebook"></i>
-                </a>
+              </a>
             </li>
             <li class="list-inline-item">
               <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
@@ -119,9 +164,9 @@
           </ul>
         </div>
         <div class="col-md-4">
-          <h4 class="text-uppercase mb-4">About Freelancer</h4>
-          <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+          <h4 class="text-uppercase mb-4">About AndaLand</h4>
+          <p class="lead mb-0">AndaLand is a market-place that trades land/estates that are all over Indonesia. By using AndaLand, you can see lands/estates that are suitable for your needs.
+          </p>
         </div>
       </div>
     </div>
@@ -129,7 +174,7 @@
 
   <div class="copyright py-4 text-center text-white">
     <div class="container">
-      <small>Copyright &copy; Your Website 2017</small>
+      <small>Copyright &copy; AndaLand Team</small>
     </div>
   </div>
 
@@ -137,7 +182,7 @@
   <div class="scroll-to-top d-lg-none position-fixed ">
     <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
-      </a>
+    </a>
   </div>
 
 
